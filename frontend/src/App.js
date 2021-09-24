@@ -2,22 +2,21 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  var ticker;
+  var start_date;
+  var end_date;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div> Ticker</div>
+      <input id = "ticker">
+      </input>
+      <div> Start_date</div>
+      <input id = "start_date">
+      </input>
+      <div> End_date </div>
+      <input id = "end_date" onClick>
+      </input>
+      <img id="Img" src="../buy.jpg" />
     </div>
   );
 }
