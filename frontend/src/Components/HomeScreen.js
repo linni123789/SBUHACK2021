@@ -9,7 +9,8 @@ const Homescreen = (props) => {
 
   const [stockData, setStockData] = useState([]);
   const [chartData, setChartData] = useState([]);
-
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
   const saveData = (ticker, start_date, shares) => {
     setStock(ticker);
     setStart_Date(start_date);
@@ -19,8 +20,6 @@ const Homescreen = (props) => {
   const returnToInfo = () => {
     setGraph(false);
   };
-  console.log(Stock);
-
   const fetchStockData = (stock, start_date) => {
     fetch("/api/history", {
       method: "POST",
@@ -40,9 +39,26 @@ const Homescreen = (props) => {
         }
         setStockData(message);
       });
-
-    setChartData(chartData.push(stockData[0]));
+  };
+  const skip = () => {
+    if (stockData.length == 0) {
+      alert("End of sim");
+    }
+    console.log("sell");
+    var array = chartData;
+    array.push(stockData[0]);
     stockData.shift();
+    setChartData(array);
+    forceUpdate();
+    console.log(chartData);
+  };
+
+  const sell = () => {
+    console.log(sell);
+  };
+
+  const buy = () => {
+    console.log(buy);
   };
   console.log(stockData);
   console.log(chartData);
@@ -58,9 +74,9 @@ const Homescreen = (props) => {
       share={Shares}
       stockData={stockData}
       chartData={chartData}
-      sell={props.sell}
-      buy={props.buy}
-      skip={props.skip}
+      sell={sell}
+      buy={buy}
+      skip={skip}
     />
   );
 };

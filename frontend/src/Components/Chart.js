@@ -7,13 +7,13 @@ const Chart = (props) => {
         data: [
           {
             type: "candlestick",
-            dataPoints: props.stockData.map((stockData) => ({
-              x: new Date(stockData.Date),
+            dataPoints: props.chartData.map((chartData) => ({
+              x: new Date(chartData.Date),
               y: [
-                stockData.Open,
-                stockData.High,
-                stockData.Low,
-                stockData.Close,
+                chartData.Open,
+                chartData.High,
+                chartData.Low,
+                chartData.Close,
               ],
             })),
           },
