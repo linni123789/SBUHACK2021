@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { CanvasJSChart } from "canvasjs-react-charts";
 const Chart = (props) => {
+  console.log(props.chartDatas)
   return (
     <CanvasJSChart
       options={{
         data: [
           {
             type: "candlestick",
-            dataPoints: props.stockData.map((stockData) => ({
-              x: new Date(stockData.Date),
+            dataPoints: props.chartDatas.map((chartData) => ({
+              x: new Date(chartData.Date),
               y: [
-                stockData.Open,
-                stockData.High,
-                stockData.Low,
-                stockData.Close,
+                chartData.Open,
+                chartData.High,
+                chartData.Low,
+                chartData.Close,
               ],
             })),
           },
