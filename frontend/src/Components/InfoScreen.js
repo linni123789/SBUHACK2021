@@ -16,12 +16,6 @@ const InfoScreen = (props) => {
     var shares = document.getElementById("share");
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
     props.fetchCallBack(ticker.value, start_date.value);
-    if (start_date.value > end_date.value) {
-      setVisible(true);
-    } else {
-      // props.saveDataCallBack(ticker.value, start_date.value, end_date.value);\
-      props.getTicker(ticker.value);
-    }
   };
   const handleChange = (e) => {
     const tickerInput = document.getElementById("ticker");

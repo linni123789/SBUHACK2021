@@ -21,6 +21,7 @@ const Homescreen = (props) => {
     setGraph(false);
   };
   const fetchStockData = (stock, start_date) => {
+    console.log(stock);
     fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
@@ -44,7 +45,6 @@ const Homescreen = (props) => {
     if (stockData.length == 0) {
       alert("End of sim");
     }
-    console.log("sell");
     var array = chartData;
     array.push(stockData[0]);
     stockData.shift();
