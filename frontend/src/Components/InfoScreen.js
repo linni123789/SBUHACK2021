@@ -19,7 +19,7 @@ const InfoScreen = (props) => {
 
   useEffect(() => {
     let timer,
-      timeoutVal = 0;
+      timeoutVal = 500;
     const input = document.getElementById("ticker");
     //console.log(input);
     input.addEventListener("keyup", handleKeyUp);
@@ -38,7 +38,6 @@ const InfoScreen = (props) => {
                 //console.log(data);
                 let dl = document.createElement("datalist");
                 dl.id = "tickers";
-
                 data.forEach((d) => {
                   const tickerSymbol = d["symbol"];
                   const tickerName = d["name"];
@@ -48,9 +47,13 @@ const InfoScreen = (props) => {
                   option.label = tickerName;
                   dl.appendChild(option);
                 });
-
                 tickerInput.innerHTML = "";
                 tickerInput.appendChild(dl);
+
+                const numberOfChildren = dl.getElementsByTagName("*").length;
+                console.log(data[0]);
+                if (data[0]["symbol"] === currentSearch)
+                  tickerInput.innerHTML = "";
               })
               .catch((err) => {
                 console.log(err);
