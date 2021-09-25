@@ -131,6 +131,7 @@ const InfoScreen = (props) => {
           </WButton>
         </WMFooter>
       </WModal>
+      <div className="instructions"> Welcome. Try GME Jan 15 2021 for fun.</div>
     </div>
   );
 };

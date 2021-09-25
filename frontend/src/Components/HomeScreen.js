@@ -6,7 +6,6 @@ const Homescreen = (props) => {
   const [Graph, setGraph] = useState(false);
   const [Stock, setStock] = useState("");
   const [Start_Date, setStart_Date] = useState("");
-  
 
   const [stockDatas, setStockDatas] = useState([]);
   const [chartDatas, setChartDatas] = useState([]);
@@ -16,7 +15,6 @@ const Homescreen = (props) => {
   const [money, setMoney] = useState(10000);
   const [share, setShare] = useState();
 
-  
   const restart = () => {
     setEnd(false);
     setGraph(false);
@@ -38,43 +36,52 @@ const Homescreen = (props) => {
             break;
           }
         }
-      setStock(ticker);
-      setStart_Date(start_date);
-      setShare(share);
-      setGraph(true);
-      setChartDatas([message[0]])
-      message.shift();
-      setStockDatas(message)
-    });   
+        setStock(ticker);
+        setStart_Date(start_date);
+        setShare(share);
+        setGraph(true);
+        setInfo(false);
+        setChartDatas([message[0]]);
+        message.shift();
+        setStockDatas(message);
+      });
   };
 
-  
-  const returnToInfo = () => {
-    setGraph(false);
-  };
-
-  const skip = () =>{
-    var array = stockDatas
-    setChartDatas([...chartDatas, array[0]])
+  const skip = () => {
+    if (stockDatas.length == 1) {
+      setEnd(true);
+      setGraph(false);
+      setInfo(false);
+    }
+    var array = stockDatas;
+    setChartDatas([...chartDatas, array[0]]);
     array.shift();
     setStockDatas(array);
-  }
+  };
 
-  const sell = (amount, price) =>{
-    setMoney(money+(amount*price))
-    var temp = Number(share) - Number(amount)
-    setShare(temp)
-    skip()
-  }
+  const sell = (amount, price) => {
+    if (share < amount) {
+      alert("You don't have this many shares");
+    } else {
+      setMoney(money + amount * price);
+      var temp = Number(share) - Number(amount);
+      setShare(temp);
+      skip();
+    }
+  };
 
-  const buy = (amount, price) =>{
-    setMoney(money-(amount*price))
-    var temp = Number(amount) + Number(share)
-    setShare(temp)
-    skip()
-  }
+  const buy = (amount, price) => {
+    if (price * amount > money) {
+      alert("You don't have enough money");
+    } else {
+      setMoney(money - amount * price);
+      var temp = Number(amount) + Number(share);
+      setShare(temp);
+      skip();
+    }
+  };
 
-  return !Graph ? (
+  return (
     <div>
       {Info && <InfoScreen saveDataCallBack={saveData} />}
       {Graph && (
@@ -84,23 +91,14 @@ const Homescreen = (props) => {
           stockDatas={stockDatas}
           chartDatas={chartDatas}
           skip={skip}
+          sell={sell}
+          buy={buy}
+          money={money}
+          share={share}
         />
       )}
-      {End && <EndScreen restart={restart} />}
+      {End && <EndScreen money={money} restart={restart} />}
     </div>
-  ) : (
-    <GraphScreen
-      returnToInfoCallBack = {returnToInfo}
-      stock = {Stock}
-      start_date = {Start_Date}
-      stockDatas = {stockDatas}
-      chartDatas = {chartDatas}
-      skip = {skip}
-      sell = {sell}
-      buy = {buy}
-      money = {money}
-      share = {share}
-    />
   );
 };
 export default Homescreen;
