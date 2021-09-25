@@ -1,5 +1,8 @@
-// import React from "react";
+import React from "react";
 
-// const GraphScreen = (props) => {
-//   return ();
-// export default GraphScreen;
+const GraphScreen = (props) => {
+  return (<div>
+      GRAPHING
+  </div>);
+}
+export default GraphScreen;
