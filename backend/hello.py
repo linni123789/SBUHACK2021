@@ -6,14 +6,14 @@ from flask import Flask, request, jsonify
 import io
 import requests
 import pandas as pd
-
+import yfinance as yf
 app = Flask(__name__)
 KEY = "6TWJBADNR5BDHC8I"
 
 @app.route('/', methods=['POST'])
 def hello_world():
     request_data = request.json
-    
+    ticker = yf.Ticker(reuqes)
     print(request_data['content'])
 
     CSV_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=IBM&interval=15min&slice=year1month1&apikey={KEY}"
