@@ -3,18 +3,33 @@ import Chart from "./Chart.js";
 const GraphScreen = (props) => {
   return (
     <div>
-      {props.start_date + "  " + props.end_date + "  " + props.stock}
+      {props.start_date + "  " + props.share + "  " + props.stock}
+      <Chart
+        stock={props.stock}
+        start_date={props.start_date}
+        share={props.share}
+        fetchStockData={props.fetchStockData}
+        chartData={props.chartData}
+        stockData={props.stockData}
+      />
       <button
+        onClick={props.buy}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full "
+      >
+        BUY
+      </button>
+      <button
+        onClick={props.sell}
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full sell"
-        onClick={props.returnToInfoCallBack}
       >
         SELL
       </button>
-      <Chart
-        stock={props.Stock}
-        start_date={props.Start_Date}
-        end_date={props.End_Date}
-      />
+      <button
+        onClick={props.skip}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full "
+      >
+        SKIP
+      </button>
     </div>
   );
 };

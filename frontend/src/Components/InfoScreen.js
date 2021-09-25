@@ -12,12 +12,9 @@ const InfoScreen = (props) => {
   const saveData = () => {
     var ticker = document.getElementById("ticker");
     var start_date = document.getElementById("start_date");
-    var end_date = document.getElementById("end_date");
-    if (start_date.value > end_date.value) {
-      setVisible(true);
-    } else {
-      props.saveDataCallBack(ticker.value, start_date.value, end_date.value);
-    }
+    var shares = document.getElementById("share");
+    props.saveDataCallBack(ticker.value, start_date.value, shares.value);
+    props.fetchCallBack(ticker.value);
   };
   const [isVisible, setVisible] = useState(false);
 
@@ -58,13 +55,13 @@ const InfoScreen = (props) => {
         </div>
         <div className="mb-4">
           <label className="block text-white  text-sm font-bold mb-2">
-            End_Date
+            Shares
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="end_date"
-            type="date"
-            placeholder="Enter Ticker"
+            id="share"
+            type="text"
+            placeholder="Enter Amount Of Shares"
           ></input>
         </div>
         <button
