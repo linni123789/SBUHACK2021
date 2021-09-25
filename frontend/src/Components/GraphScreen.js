@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Chart from "./Chart.js";
 const GraphScreen = (props) => {
   return (
     <div>
@@ -9,6 +10,7 @@ const GraphScreen = (props) => {
       >
         SELL
       </button>
+      <Chart />
     </div>
   );
 };
