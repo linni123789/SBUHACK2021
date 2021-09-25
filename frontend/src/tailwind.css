@@ -6830,7 +6830,10 @@ video {
 }
 
 .w-full {
-  width: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 100px;
 }
 
 .w-screen {
@@ -15386,7 +15389,7 @@ video {
 
 .bg-white {
   --tw-bg-opacity: 1;
-  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+  background-color: transparent;
 }
 
 .bg-gray-50 {
@@ -188331,3 +188334,5 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+;
+;

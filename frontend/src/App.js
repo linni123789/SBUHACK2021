@@ -1,5 +1,6 @@
 import HomeScreen from "./Components/HomeScreen";
 import "./tailwind.css";
+import "./infoscreen.css";
 import Homescreen from "./Components/HomeScreen";
 function App() {
   var ticker;
