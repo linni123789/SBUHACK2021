@@ -5,14 +5,14 @@ const GraphScreen = (props) => {
   // console.log("money"+props.money)
   // console.log("share"+props.share)
 
-  const handleBuy = () =>{
+  const handleBuy = () => {
     var amount = parseFloat(document.getElementById("buy").value);
     var last = props.chartDatas[props.chartDatas.length-1]
     var price = (last["High"] + last["Low"]) /2
     props.buy(amount, price, last)
   }
 
-  const handleSell = () =>{
+  const handleSell = () => {
     var amount = parseFloat(document.getElementById("sell").value);
     var last = props.chartDatas[props.chartDatas.length-1]
     var price = (last["High"] + last["Low"]) /2
@@ -25,7 +25,10 @@ const GraphScreen = (props) => {
   }
 
   return (
-    <div>
+    <div      className="background"
+    style={{
+      backgroundImage: `url("https://wallpaperaccess.com/full/1219598.jpg")`,
+    }}>
       <Header 
         stock={props.stock}
         start_date={props.start_date}
@@ -49,9 +52,9 @@ const GraphScreen = (props) => {
         <div className="mb-4">
           <input
             className="shadow appearance-none border rounded w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id ="buy"
+            id="buy"
             type="text"
-            placeholder="Enter Amount to Buy" 
+            placeholder="Enter Amount to Buy"
           ></input>
           <button
             onClick={handleBuy}
@@ -63,9 +66,9 @@ const GraphScreen = (props) => {
         <div className="mb-4">
           <input
             className="shadow appearance-none border rounded w-3/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id ="sell"
+            id="sell"
             type="text"
-            placeholder="Enter Amount to Sell" 
+            placeholder="Enter Amount to Sell"
           ></input>
           <button
             onClick={handleSell}
