@@ -12,7 +12,6 @@ const InfoScreen = (props) => {
   const saveData = () => {
     var ticker = document.getElementById("ticker");
     var start_date = document.getElementById("start_date");
-    var end_date = document.getElementById("end_date");
     var shares = document.getElementById("share");
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
   };

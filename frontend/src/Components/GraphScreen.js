@@ -2,16 +2,23 @@ import React, { useEffect } from "react";
 import Chart from "./Chart.js";
 const GraphScreen = (props) => {
   return (
-    <div>
+    <div
+      className="background"
+      style={{
+        backgroundImage: `url("https://wallpaperaccess.com/full/1219598.jpg")`,
+      }}
+    >
       {props.start_date + "  " + props.share + "  " + props.stock}
-      <Chart
-        stock={props.stock}
-        start_date={props.start_date}
-        share={props.share}
-        fetchStockData={props.fetchStockData}
-        chartDatas={props.chartDatas}
-        stockDatas={props.stockDatas}
-      />
+      <div className="chart">
+        <Chart
+          stock={props.stock}
+          start_date={props.start_date}
+          share={props.share}
+          fetchStockData={props.fetchStockData}
+          chartDatas={props.chartDatas}
+          stockDatas={props.stockDatas}
+        />
+      </div>
       <button
         onClick={props.buy}
         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full "
