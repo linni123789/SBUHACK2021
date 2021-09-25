@@ -1,12 +1,11 @@
 import HomeScreen from "./Components/HomeScreen";
 import "./tailwind.css";
-
+import Homescreen from "./Components/HomeScreen";
 function App() {
-  return (
-    <div className="App">
-      <HomeScreen />
-    </div>
-  );
+  var ticker;
+  var start_date;
+  var end_date;
+  return <Homescreen> </Homescreen>;
 }
 
 export default App;
