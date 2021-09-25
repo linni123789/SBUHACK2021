@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   WNavItem,
   WInput,
@@ -17,42 +17,52 @@ const InfoScreen = (props) => {
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
     props.fetchCallBack(ticker.value, start_date.value);
   };
-  const handleChange = (e) => {
-    const tickerInput = document.getElementById("ticker");
-    console.log(tickerInput);
-    console.log(e.nativeEvent.inputType);
-    const currentSearch = e.target.value;
-    if (e.nativeEvent.inputType === "insertText") {
-      fetch(
-        `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${currentSearch}&apikey=TBTPD13RS3FL4CTS`
-      ).then((response) => {
-        response
-          .json()
-          .then((data) => {
-            console.log(data);
-            const bestMatches = data.bestMatches;
 
-            let dl = document.createElement("datalist");
-            dl.id = "tickers";
+  useEffect(() => {
+    let timer,
+      timeoutVal = 1000;
+    const input = document.getElementById("ticker");
+    //console.log(input);
+    input.addEventListener("keyup", handleKeyUp);
+    function handleKeyUp(e) {
+      if (e.target.value.length > 0) {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          const tickerInput = document.getElementById("ticker");
+          const currentSearch = e.target.value;
+          fetch(
+            `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${currentSearch}&apikey=TBTPD13RS3FL4CTS`
+          ).then((response) => {
+            response
+              .json()
+              .then((data) => {
+                //console.log(data);
+                const bestMatches = data.bestMatches;
 
-            bestMatches.forEach((d) => {
-              const tickerSymbol = d["1. symbol"];
-              const tickerName = d["2. name"];
-              console.log(tickerSymbol + "\t" + tickerName);
-              let option = document.createElement("option");
-              option.value = tickerSymbol;
-              option.label = tickerName;
-              dl.appendChild(option);
-            });
-            tickerInput.innerHTML = "";
-            tickerInput.appendChild(dl);
-          })
-          .catch((err) => {
-            console.log(err);
+                let dl = document.createElement("datalist");
+                dl.id = "tickers";
+
+                bestMatches.forEach((d) => {
+                  const tickerSymbol = d["1. symbol"];
+                  const tickerName = d["2. name"];
+                  //console.log(tickerSymbol + "\t" + tickerName);
+                  let option = document.createElement("option");
+                  option.value = tickerSymbol;
+                  option.label = tickerName;
+                  dl.appendChild(option);
+                });
+
+                tickerInput.innerHTML = "";
+                tickerInput.appendChild(dl);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           });
-      });
+        }, timeoutVal);
+      }
     }
-  };
+  });
 
   const [isVisible, setVisible] = useState(false);
 
@@ -79,7 +89,6 @@ const InfoScreen = (props) => {
             id="ticker"
             type="text"
             placeholder="Enter Ticker"
-            onChange={handleChange}
           ></input>
         </div>
         <div className="mb-4">
