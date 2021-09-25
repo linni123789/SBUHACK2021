@@ -6,24 +6,51 @@ const Homescreen = (props) => {
   const [Stock, setStock] = useState("");
   const [Start_Date, setStart_Date] = useState("");
   const [End_Date, setEnd_Date] = useState("");
+
   const saveData = (ticker, start_date, end_date) => {
     setStock(ticker);
     setStart_Date(start_date);
     setEnd_Date(end_date);
     setGraph(true);
   };
+
   const returnToInfo = () => {
     setGraph(false);
   };
+
+  const getTicker = async ( ) => {
+    console.log("Hello")
+    fetch('/', {
+        method: 'POST',
+        body: JSON.stringify({
+          ticker:Stock,
+          Start_Date:Start_Date,
+          End_Date:End_Date
+        }),
+        headers:{ 'Content-Type' : 'application/json'}
+    }).then(response => response.json())
+      .then(message => console.log(message));
+  }
+
   return !Graph ? (
-    <InfoScreen saveDataCallBack={saveData} />
+    <div>
+      <InfoScreen saveDataCallBack={saveData} />
+      <button
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full buy"
+          onClick={getTicker}
+        >
+          BUY
+      </button>
+    </div>
   ) : (
-    <GraphScreen
+    
+      <GraphScreen
       returnToInfoCallBack={returnToInfo}
       stock={Stock}
       start_date={Start_Date}
       end_date={End_Date}
-    />
+      />
+    
   );
 };
 export default Homescreen;
