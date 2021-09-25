@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   WNavItem,
   WInput,
@@ -12,9 +12,56 @@ const InfoScreen = (props) => {
   const saveData = () => {
     var ticker = document.getElementById("ticker");
     var start_date = document.getElementById("start_date");
+    var end_date = document.getElementById("end_date");
     var shares = document.getElementById("share");
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
   };
+
+  useEffect(() => {
+    let timer,
+      timeoutVal = 500;
+    const input = document.getElementById("ticker");
+    console.log(input);
+    input.addEventListener("keyup", handleKeyUp);
+    function handleKeyUp(e) {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        const tickerInput = document.getElementById("ticker");
+        console.log(tickerInput);
+        const currentSearch = e.target.value;
+        fetch(
+          `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${currentSearch}&apikey=TBTPD13RS3FL4CTS`
+        ).then((response) => {
+          response
+            .json()
+            .then((data) => {
+              console.log(data);
+              const bestMatches = data.bestMatches;
+
+              let dl = document.createElement("datalist");
+              dl.id = "tickers";
+
+              bestMatches.forEach((d) => {
+                const tickerSymbol = d["1. symbol"];
+                const tickerName = d["2. name"];
+                console.log(tickerSymbol + "\t" + tickerName);
+                let option = document.createElement("option");
+                option.value = tickerSymbol;
+                option.label = tickerName;
+                dl.appendChild(option);
+              });
+
+              tickerInput.innerHTML = "";
+              tickerInput.appendChild(dl);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      }, timeoutVal);
+    }
+  });
+
   const [isVisible, setVisible] = useState(false);
 
   <WButton onClick={() => setVisible(true)} color="primary">
@@ -35,6 +82,7 @@ const InfoScreen = (props) => {
             Ticker
           </label>
           <input
+            list="tickers"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="ticker"
             type="text"
