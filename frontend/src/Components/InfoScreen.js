@@ -14,7 +14,7 @@ const InfoScreen = (props) => {
     var start_date = document.getElementById("start_date");
     var shares = document.getElementById("share");
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
-    props.fetchCallBack(ticker.value);
+    props.fetchCallBack(ticker.value, start_date.value);
   };
   const [isVisible, setVisible] = useState(false);
 

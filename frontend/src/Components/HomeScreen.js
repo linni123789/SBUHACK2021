@@ -21,8 +21,7 @@ const Homescreen = (props) => {
   };
   console.log(Stock);
 
-  const fetchStockData = (stock) => {
-    console.log(stock);
+  const fetchStockData = (stock, start_date) => {
     fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
@@ -33,7 +32,7 @@ const Homescreen = (props) => {
       .then((response) => response.json())
       .then((message) => {
         for (var i = 0; i < message.length; i++) {
-          if (message[i].Date == Start_Date) {
+          if (message[i].Date == start_date) {
             var index = i;
             message.splice(0, index);
             break;
@@ -41,9 +40,12 @@ const Homescreen = (props) => {
         }
         setStockData(message);
       });
+
+    setChartData(chartData.push(stockData[0]));
+    stockData.shift();
   };
   console.log(stockData);
-
+  console.log(chartData);
   return !Graph ? (
     <div>
       <InfoScreen saveDataCallBack={saveData} fetchCallBack={fetchStockData} />
