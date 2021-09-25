@@ -11,7 +11,7 @@
 
 ## Terminal 1
 
-## Backend
+### Backend
 
 ```ps1
 cd backend/
@@ -23,7 +23,7 @@ python -m flask run
 
 ## Terminal 2
 
-# Frontend
+### Frontend
 
 ```ps1
 cd frontend/
