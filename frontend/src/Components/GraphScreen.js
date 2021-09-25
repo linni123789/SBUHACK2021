@@ -1,8 +1,16 @@
 import React from "react";
 
 const GraphScreen = (props) => {
-  return (<div>
-      GRAPHING
-  </div>);
-}
+  return (
+    <div>
+      {props.start_date + "  " + props.end_date + "  " + props.stock}
+      <button
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full sell"
+        onClick={props.returnToInfoCallBack}
+      >
+        SELL
+      </button>
+    </div>
+  );
+};
 export default GraphScreen;
