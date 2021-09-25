@@ -6,11 +6,15 @@ const Homescreen = (props) => {
   const [Graph, setGraph] = useState(false);
   const [Stock, setStock] = useState("");
   const [Start_Date, setStart_Date] = useState("");
-  const [Share, setShare] = useState(0);
+  
+
   const [stockDatas, setStockDatas] = useState([]);
   const [chartDatas, setChartDatas] = useState([]);
 
-  const saveData = (ticker, start_date, shares) => {
+  const [money, setMoney] = useState(10000);
+  const [share, setShare] = useState();
+
+  const saveData = (ticker, start_date, share) => {
     fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
@@ -28,7 +32,7 @@ const Homescreen = (props) => {
       }
       setStock(ticker);
       setStart_Date(start_date);
-      setShare(shares);
+      setShare(share);
       setGraph(true);
       setChartDatas([message[0]])
       message.shift();
@@ -36,6 +40,7 @@ const Homescreen = (props) => {
     });   
   };
 
+  
   const returnToInfo = () => {
     setGraph(false);
   };
@@ -45,6 +50,20 @@ const Homescreen = (props) => {
     setChartDatas([...chartDatas, array[0]])
     array.shift();
     setStockDatas(array);
+  }
+
+  const sell = (amount, price) =>{
+    setMoney(money+(amount*price))
+    var temp = Number(share) - Number(amount)
+    setShare(temp)
+    skip()
+  }
+
+  const buy = (amount, price) =>{
+    setMoney(money-(amount*price))
+    var temp = Number(amount) + Number(share)
+    setShare(temp)
+    skip()
   }
 
   return !Graph ? (
@@ -59,6 +78,10 @@ const Homescreen = (props) => {
       stockDatas = {stockDatas}
       chartDatas = {chartDatas}
       skip = {skip}
+      sell = {sell}
+      buy = {buy}
+      money = {money}
+      share = {share}
     />
   );
 };
