@@ -9,7 +9,7 @@
 
 ## Backend
 
-```
+```ps1
 cd backend/
 pip install flask pandas yfinance
 $env:FLASK_APP = "hello"
@@ -19,7 +19,7 @@ python -m flask run
 
 ## FrontEnd
 
-```
+```ps1
 cd ../frontend
 npm install
 npm run
