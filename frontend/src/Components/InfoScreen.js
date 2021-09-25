@@ -12,10 +12,54 @@ const InfoScreen = (props) => {
   const saveData = () => {
     var ticker = document.getElementById("ticker");
     var start_date = document.getElementById("start_date");
+    var end_date = document.getElementById("end_date");
     var shares = document.getElementById("share");
     props.saveDataCallBack(ticker.value, start_date.value, shares.value);
     props.fetchCallBack(ticker.value, start_date.value);
+    if (start_date.value > end_date.value) {
+      setVisible(true);
+    } else {
+      // props.saveDataCallBack(ticker.value, start_date.value, end_date.value);\
+      props.getTicker(ticker.value);
+    }
   };
+  const handleChange = (e) => {
+    const tickerInput = document.getElementById("ticker");
+    console.log(tickerInput);
+    console.log(e.nativeEvent.inputType);
+    const currentSearch = e.target.value;
+    if (e.nativeEvent.inputType === "insertText") {
+      fetch(
+        `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${currentSearch}&apikey=TBTPD13RS3FL4CTS`
+      ).then((response) => {
+        response
+          .json()
+          .then((data) => {
+            console.log(data);
+            const bestMatches = data.bestMatches;
+
+            let dl = document.createElement("datalist");
+            dl.id = "tickers";
+
+            bestMatches.forEach((d) => {
+              const tickerSymbol = d["1. symbol"];
+              const tickerName = d["2. name"];
+              console.log(tickerSymbol + "\t" + tickerName);
+              let option = document.createElement("option");
+              option.value = tickerSymbol;
+              option.label = tickerName;
+              dl.appendChild(option);
+            });
+            tickerInput.innerHTML = "";
+            tickerInput.appendChild(dl);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
+  };
+
   const [isVisible, setVisible] = useState(false);
 
   <WButton onClick={() => setVisible(true)} color="primary">
@@ -36,10 +80,12 @@ const InfoScreen = (props) => {
             Ticker
           </label>
           <input
+            list="tickers"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="ticker"
             type="text"
             placeholder="Enter Ticker"
+            onChange={handleChange}
           ></input>
         </div>
         <div className="mb-4">
