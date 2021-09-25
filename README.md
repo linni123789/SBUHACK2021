@@ -12,7 +12,7 @@
 ```ps1
 cd backend/
 pip install flask pandas yfinance
-$env:FLASK_APP = "hello"
+$env:FLASK_APP="hello"
 $env:FLASK_ENV="development"
 python -m flask run
 ```
