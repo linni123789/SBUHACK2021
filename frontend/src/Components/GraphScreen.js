@@ -6,17 +6,27 @@ const GraphScreen = (props) => {
   // console.log("share"+props.share)
 
   const handleBuy = () => {
-    var amount = parseFloat(document.getElementById("buy").value);
-    var last = props.chartDatas[props.chartDatas.length-1]
-    var price = (last["High"] + last["Low"]) /2
-    props.buy(amount, price, last)
+    if (document.getElementById("buy").value != ""){
+      var amount = parseFloat(document.getElementById("buy").value);
+      var last = props.chartDatas[props.chartDatas.length-1]
+      var price = (last["High"] + last["Low"]) /2
+      props.buy(amount, price, last)
+    }
+    else{
+      alert("NO AMOUNT ENTERED");
+    }
   }
 
   const handleSell = () => {
-    var amount = parseFloat(document.getElementById("sell").value);
-    var last = props.chartDatas[props.chartDatas.length-1]
-    var price = (last["High"] + last["Low"]) /2
-    props.sell(amount, price, last)
+    if (document.getElementById("sell").value != ""){
+      var amount = parseFloat(document.getElementById("sell").value);
+      var last = props.chartDatas[props.chartDatas.length-1]
+      var price = (last["High"] + last["Low"]) /2
+      props.sell(amount, price, last)
+    }
+    else{
+      alert("NO AMOUNT ENTERED");
+    }
   }
 
   const handleSkip= () =>{
