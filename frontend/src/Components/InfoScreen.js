@@ -13,6 +13,9 @@ const InfoScreen = (props) => {
     var ticker = document.getElementById("ticker");
     var start_date = document.getElementById("start_date");
     var end_date = document.getElementById("end_date");
+    var shares = document.getElementById("share");
+    props.saveDataCallBack(ticker.value, start_date.value, shares.value);
+    props.fetchCallBack(ticker.value, start_date.value);
     if (start_date.value > end_date.value) {
       setVisible(true);
     } else {
@@ -20,7 +23,6 @@ const InfoScreen = (props) => {
       props.getTicker(ticker.value);
     }
   };
-
   const handleChange = (e) => {
     const tickerInput = document.getElementById("ticker");
     console.log(tickerInput);
@@ -57,6 +59,7 @@ const InfoScreen = (props) => {
       });
     }
   };
+
   const [isVisible, setVisible] = useState(false);
 
   <WButton onClick={() => setVisible(true)} color="primary">
@@ -98,13 +101,13 @@ const InfoScreen = (props) => {
         </div>
         <div className="mb-4">
           <label className="block text-white  text-sm font-bold mb-2">
-            End_Date
+            Shares
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="end_date"
-            type="date"
-            placeholder="Enter Ticker"
+            id="share"
+            type="text"
+            placeholder="Enter Amount Of Shares"
           ></input>
         </div>
         <button

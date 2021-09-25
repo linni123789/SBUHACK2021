@@ -15,6 +15,8 @@ def get_history():
     request_data = request.json
     ticker = yf.Ticker(request_data['ticker'])
     df = ticker.history(period="max")
+    df['Date'] = df.index
+    df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
     return df.to_json(orient = 'records')
 
 
