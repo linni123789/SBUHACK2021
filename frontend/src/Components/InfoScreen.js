@@ -1,3 +1,4 @@
+import { symbol } from "prop-types";
 import React, { useState, useEffect } from "react";
 import {
   WNavItem,
@@ -18,7 +19,7 @@ const InfoScreen = (props) => {
 
   useEffect(() => {
     let timer,
-      timeoutVal = 1000;
+      timeoutVal = 0;
     const input = document.getElementById("ticker");
     //console.log(input);
     input.addEventListener("keyup", handleKeyUp);
@@ -29,20 +30,18 @@ const InfoScreen = (props) => {
           const tickerInput = document.getElementById("ticker");
           const currentSearch = e.target.value;
           fetch(
-            `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${currentSearch}&apikey=TBTPD13RS3FL4CTS`
+            `https://ticker-2e1ica8b9.now.sh/keyword/${currentSearch}`
           ).then((response) => {
             response
               .json()
               .then((data) => {
                 //console.log(data);
-                const bestMatches = data.bestMatches;
-
                 let dl = document.createElement("datalist");
                 dl.id = "tickers";
 
-                bestMatches.forEach((d) => {
-                  const tickerSymbol = d["1. symbol"];
-                  const tickerName = d["2. name"];
+                data.forEach((d) => {
+                  const tickerSymbol = d["symbol"];
+                  const tickerName = d["name"];
                   //console.log(tickerSymbol + "\t" + tickerName);
                   let option = document.createElement("option");
                   option.value = tickerSymbol;
