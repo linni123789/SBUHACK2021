@@ -1,6 +1,4 @@
-import logo from "./logo.svg";
-import "./App.css";
-import "./index.css";
+import HomeScreen from "./Components/HomeScreen";
 import "./tailwind.css";
 import "./infoscreen.css";
 import Homescreen from "./Components/HomeScreen";
