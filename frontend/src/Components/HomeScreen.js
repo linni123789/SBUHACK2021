@@ -13,15 +13,17 @@ const Homescreen = (props) => {
   const [End, setEnd] = useState(false);
   const [Info, setInfo] = useState(true);
 
+  const [begin, setBegin] = useState();
   const [money, setMoney] = useState(10000);
   const [share, setShare] = useState();
-
+  const [last, setLast] = useState({});
   
   const restart = () => {
     setEnd(false);
     setGraph(false);
     setInfo(true);
   };
+
   const saveData = (ticker, start_date, share) => {
     fetch("/api/history", {
       method: "POST",
@@ -43,6 +45,13 @@ const Homescreen = (props) => {
       setShare(share);
       setGraph(true);
       setChartDatas([message[0]])
+      setLast(message[0])
+      console.log(message[0])
+      const price = ((message[0].High+message[0].Low)/2).toFixed(2)
+      console.log(price)
+      const begin = ((share*price)+money).toFixed(2)
+      console.log(begin)
+      setBegin(begin)
       message.shift();
       setStockDatas(message)
     });   
@@ -53,25 +62,26 @@ const Homescreen = (props) => {
     setGraph(false);
   };
 
-  const skip = () =>{
+  const skip = (last) =>{
     var array = stockDatas
     setChartDatas([...chartDatas, array[0]])
     array.shift();
     setStockDatas(array);
+    setLast(last)
   }
 
-  const sell = (amount, price) =>{
+  const sell = (amount, price, last) =>{
     setMoney(money+(amount*price))
     var temp = Number(share) - Number(amount)
     setShare(temp)
-    skip()
+    skip(last)
   }
 
-  const buy = (amount, price) =>{
+  const buy = (amount, price, last) =>{
     setMoney(money-(amount*price))
     var temp = Number(amount) + Number(share)
     setShare(temp)
-    skip()
+    skip(last)
   }
 
   return !Graph ? (
@@ -100,6 +110,8 @@ const Homescreen = (props) => {
       buy = {buy}
       money = {money}
       share = {share}
+      last = {last}
+      begin = {begin}
     />
   );
 };

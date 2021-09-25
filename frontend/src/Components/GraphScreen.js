@@ -2,38 +2,41 @@ import React, { useEffect, useState } from "react";
 import Chart from "./Chart.js";
 import Header from "./Header.js";
 const GraphScreen = (props) => {
-  console.log("money"+props.money)
-  console.log("share"+props.share)
-  console.log(typeof share)
+  // console.log("money"+props.money)
+  // console.log("share"+props.share)
 
   const handleBuy = () =>{
     var amount = parseFloat(document.getElementById("buy").value);
-    var price = (props.chartDatas[0]["High"] + props.chartDatas[0]["Low"]) /2
-    props.buy(amount, price)
+    var last = props.chartDatas[props.chartDatas.length-1]
+    var price = (last["High"] + last["Low"]) /2
+    props.buy(amount, price, last)
   }
 
   const handleSell = () =>{
     var amount = parseFloat(document.getElementById("sell").value);
-    var price = (props.chartDatas[0]["High"] + props.chartDatas[0]["Low"]) /2
-    props.sell(amount, price)
+    var last = props.chartDatas[props.chartDatas.length-1]
+    var price = (last["High"] + last["Low"]) /2
+    props.sell(amount, price, last)
   }
 
   const handleSkip= () =>{
-    props.skip()
+    var last = props.chartDatas[props.chartDatas.length-1]
+    props.skip(last)
   }
 
   return (
     <div>
-      {}
       <Header 
         stock={props.stock}
         start_date={props.start_date}
         share={props.share}
+        money={props.money}
+        last={props.last}
+        begin={props.begin}
         fetchStockData={props.fetchStockData}
         chartDatas={props.chartDatas}
         stockDatas={props.stockDatas}
       />
-      {props.start_date + "  " + props.share + "  " + props.stock}
       <Chart
         stock={props.stock}
         start_date={props.start_date}
