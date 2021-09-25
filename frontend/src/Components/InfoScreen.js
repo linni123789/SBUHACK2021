@@ -50,7 +50,6 @@ const InfoScreen = (props) => {
                 tickerInput.innerHTML = "";
                 tickerInput.appendChild(dl);
 
-                const numberOfChildren = dl.getElementsByTagName("*").length;
                 console.log(data[0]);
                 if (data[0]["symbol"] === currentSearch)
                   tickerInput.innerHTML = "";
