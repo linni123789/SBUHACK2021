@@ -10,7 +10,11 @@ const GraphScreen = (props) => {
       >
         SELL
       </button>
-      <Chart />
+      <Chart
+        stock={props.Stock}
+        start_date={props.Start_Date}
+        end_date={props.End_Date}
+      />
     </div>
   );
 };

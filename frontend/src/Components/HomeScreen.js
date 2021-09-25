@@ -15,22 +15,21 @@ const Homescreen = (props) => {
     getTicker();
   };
 
-  const returnToInfo = () => {
-    setGraph(false);
-  };
-
-  const getTicker = async () => {
-    fetch("/", {
+  const getTicker = async (stock) => {
+    fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
         ticker: Stock,
-        Start_Date: Start_Date,
-        End_Date: End_Date,
+        // Start_Date: Start_Date,
+        // End_Date: End_Date,
       }),
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((message) => console.log(message));
+  };
+  const returnToInfo = () => {
+    setGraph(false);
   };
 
   return !Graph ? (
