@@ -6,18 +6,23 @@ const Homescreen = (props) => {
   const [Graph, setGraph] = useState(false);
   const [Stock, setStock] = useState("");
   const [Start_Date, setStart_Date] = useState("");
-  const [Shares, setShare] = useState(0);
+  
+
   const [stockDatas, setStockDatas] = useState([]);
   const [chartDatas, setChartDatas] = useState([]);
   const [End, setEnd] = useState(false);
   const [Info, setInfo] = useState(true);
 
+  const [money, setMoney] = useState(10000);
+  const [share, setShare] = useState();
+
+  
   const restart = () => {
     setEnd(false);
     setGraph(false);
     setInfo(true);
   };
-  const saveData = (ticker, start_date, shares) => {
+  const saveData = (ticker, start_date, share) => {
     fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
@@ -33,30 +38,43 @@ const Homescreen = (props) => {
             break;
           }
         }
-        setStock(ticker);
-        setStart_Date(start_date);
-        setShare(shares);
-        setGraph(true);
-        setInfo(false);
-        setChartDatas([message[0]]);
-        message.shift();
-        setStockDatas(message);
-      });
+      setStock(ticker);
+      setStart_Date(start_date);
+      setShare(share);
+      setGraph(true);
+      setChartDatas([message[0]])
+      message.shift();
+      setStockDatas(message)
+    });   
   };
 
-  const skip = () => {
-    if (stockDatas.length == 1) {
-      setGraph(false);
-      setInfo(false);
-      setEnd(true);
-    } else {
-      var array = stockDatas;
-      setChartDatas([...chartDatas, array[0]]);
-      array.shift();
-      setStockDatas(array);
-    }
+  
+  const returnToInfo = () => {
+    setGraph(false);
   };
-  return (
+
+  const skip = () =>{
+    var array = stockDatas
+    setChartDatas([...chartDatas, array[0]])
+    array.shift();
+    setStockDatas(array);
+  }
+
+  const sell = (amount, price) =>{
+    setMoney(money+(amount*price))
+    var temp = Number(share) - Number(amount)
+    setShare(temp)
+    skip()
+  }
+
+  const buy = (amount, price) =>{
+    setMoney(money-(amount*price))
+    var temp = Number(amount) + Number(share)
+    setShare(temp)
+    skip()
+  }
+
+  return !Graph ? (
     <div>
       {Info && <InfoScreen saveDataCallBack={saveData} />}
       {Graph && (
@@ -70,6 +88,19 @@ const Homescreen = (props) => {
       )}
       {End && <EndScreen restart={restart} />}
     </div>
+  ) : (
+    <GraphScreen
+      returnToInfoCallBack = {returnToInfo}
+      stock = {Stock}
+      start_date = {Start_Date}
+      stockDatas = {stockDatas}
+      chartDatas = {chartDatas}
+      skip = {skip}
+      sell = {sell}
+      buy = {buy}
+      money = {money}
+      share = {share}
+    />
   );
 };
 export default Homescreen;
