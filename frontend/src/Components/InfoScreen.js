@@ -1,4 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  WNavItem,
+  WInput,
+  WModal,
+  WMHeader,
+  WMFooter,
+  WButton,
+} from "wt-frontend";
 
 const InfoScreen = (props) => {
   const saveData = () => {
@@ -6,11 +14,16 @@ const InfoScreen = (props) => {
     var start_date = document.getElementById("start_date");
     var end_date = document.getElementById("end_date");
     if (start_date.value > end_date.value) {
-      alert("start_date is after end._date");
+      setVisible(true);
     } else {
       props.saveDataCallBack(ticker.value, start_date.value, end_date.value);
     }
   };
+  const [isVisible, setVisible] = useState(false);
+
+  <WButton onClick={() => setVisible(true)} color="primary">
+    Show
+  </WButton>;
   return (
     <div
       className="background"
@@ -60,8 +73,18 @@ const InfoScreen = (props) => {
         >
           BUY
         </button>
-        {/* </form> */}
       </div>
+      <WModal className="modal" visible={isVisible}>
+        <WMHeader>Start Date is after End Date</WMHeader>
+        <WMFooter>
+          <WButton
+            className="hover:bg-blue-200"
+            onClick={() => setVisible(false)}
+          >
+            Close
+          </WButton>
+        </WMFooter>
+      </WModal>
     </div>
   );
 };

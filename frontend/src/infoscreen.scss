@@ -1,0 +1,38 @@
+@use "../node_modules/wt-frontend/build/global/wolfie";
+
+@use "../node_modules/wt-frontend/build/global/components";
+.buy {
+  margin-left: 110px;
+  width: 100px;
+  margin-top: 10%;
+}
+
+.title {
+  color: white;
+  size: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 80px;
+  text-align: center;
+}
+
+.background {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  width: 100%;
+  height: 1000px;
+}
+
+.delete-modal {
+  width: fit-content;
+  background-color: white;
+}
+
+.modal {
+  margin-top: 200px;
+  text-align: center;
+  background-color: lightblue;
+  outline-color: black;
+  outline-style: auto;
+}
