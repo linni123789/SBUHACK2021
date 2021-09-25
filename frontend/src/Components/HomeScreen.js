@@ -19,13 +19,13 @@ const Homescreen = (props) => {
     setGraph(false);
   };
 
-  const getTicker = async () => {
-    fetch("/", {
+  const getTicker = async (stock) => {
+    fetch("/api/history", {
       method: "POST",
       body: JSON.stringify({
-        ticker: Stock,
-        Start_Date: Start_Date,
-        End_Date: End_Date,
+        ticker: stock,
+        // Start_Date: Start_Date,
+        // End_Date: End_Date,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -35,7 +35,7 @@ const Homescreen = (props) => {
 
   return !Graph ? (
     <div>
-      <InfoScreen saveDataCallBack={saveData} />
+      <InfoScreen saveDataCallBack={saveData} getTicker={getTicker}/>
     </div>
   ) : (
     <GraphScreen

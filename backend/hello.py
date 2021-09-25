@@ -14,8 +14,8 @@ KEY = "6TWJBADNR5BDHC8I"
 def get_history():
     request_data = request.json
     ticker = yf.Ticker(request_data['ticker'])
-    hist = ticker.history(period="max")
-    return hist.to_json(orient = 'records')
+    df = ticker.history(period="max")
+    return df.to_json(orient = 'records')
 
 
 @app.route('/api/ticker', methods=['POST'])

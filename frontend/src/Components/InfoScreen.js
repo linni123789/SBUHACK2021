@@ -16,7 +16,8 @@ const InfoScreen = (props) => {
     if (start_date.value > end_date.value) {
       setVisible(true);
     } else {
-      props.saveDataCallBack(ticker.value, start_date.value, end_date.value);
+      // props.saveDataCallBack(ticker.value, start_date.value, end_date.value);\
+      props.getTicker(ticker.value)
     }
   };
   const [isVisible, setVisible] = useState(false);
