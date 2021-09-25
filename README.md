@@ -5,7 +5,11 @@
 - Have Python
 - Have Nodejs
 
-# You have to open up both the backend and the front end for the project to work as intended.
+# You have to open up both the backend and the front end for the project to work as intended.#
+
+## Have 2 terminals open!
+
+## Terminal 1
 
 ## Backend
 
@@ -17,10 +21,12 @@ $env:FLASK_ENV="development"
 python -m flask run
 ```
 
-## FrontEnd
+## Terminal 2
+
+# Frontend
 
 ```ps1
-cd ../frontend
+cd frontend/
 npm install
 npm run
 npm start
