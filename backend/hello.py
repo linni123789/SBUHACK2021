@@ -10,20 +10,21 @@ import yfinance as yf
 app = Flask(__name__)
 KEY = "6TWJBADNR5BDHC8I"
 
-@app.route('/', methods=['POST'])
-def hello_world():
+@app.route('/api/history', methods=['POST'])
+def get_history():
     request_data = request.json
-    ticker = yf.Ticker(reuqes)
-    print(request_data['content'])
+    ticker = yf.Ticker(request_data['ticker'])
+    hist = ticker.history(period="max")
+    return hist.to_json(orient = 'records')
 
-    CSV_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=IBM&interval=15min&slice=year1month1&apikey={KEY}"
 
-    with requests.Session() as s:
-        download = s.get(CSV_URL).content
-        df = pd.read_csv(io.StringIO(download.decode('utf-8')))
-        print(df)
-
-    return df.to_json(orient = 'records')
+@app.route('/api/ticker', methods=['POST'])
+def get_ticker():
+    request_data = request.json
+    ticker = yf.Ticker(request_data['ticker'])
+    CSV_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol={ticker}&interval=15min&slice=year1month1&apikey={KEY}"
+    hist = ticker.history(period="max")
+    return hist.to_json(orient = 'records')
 
 if __name__ == "__main__":
     print("okay")
