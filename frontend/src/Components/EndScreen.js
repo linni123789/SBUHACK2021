@@ -10,7 +10,8 @@ const EndScreen = (props) => {
       <div className="title">Congratulations, you have reached the end!</div>
       <div className="title">
         {" "}
-        You made ${props.profit} Can you shoot for the moon?{" "}
+        You have ${props.money}. You made ${props.money - 10000} Can you shoot
+        for the moon?{" "}
       </div>
       <button
         onClick={props.restart}
