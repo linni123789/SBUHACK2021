@@ -13,10 +13,9 @@ KEY = "6TWJBADNR5BDHC8I"
 @app.route('/', methods=['POST'])
 def hello_world():
     request_data = request.json
-    
-    print(request_data['content'])
-
-    CSV_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol=IBM&interval=15min&slice=year1month1&apikey={KEY}"
+    # print(request_data['content'])
+    ticker = request.json['ticker']
+    CSV_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY_EXTENDED&symbol={ticker}&interval=15min&slice=year1month1&apikey={KEY}"
 
     with requests.Session() as s:
         download = s.get(CSV_URL).content
