@@ -9,8 +9,8 @@ const GraphScreen = (props) => {
         start_date={props.start_date}
         share={props.share}
         fetchStockData={props.fetchStockData}
-        chartData={props.chartData}
-        stockData={props.stockData}
+        chartDatas={props.chartDatas}
+        stockDatas={props.stockDatas}
       />
       <button
         onClick={props.buy}
