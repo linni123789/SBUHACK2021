@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InfoScreen from "./InfoScreen";
 import GraphScreen from "./GraphScreen";
-
+import EndScreen from "./EndScreen";
 const Homescreen = (props) => {
   const [Graph, setGraph] = useState(false);
   const [Stock, setStock] = useState("");
@@ -10,10 +10,18 @@ const Homescreen = (props) => {
 
   const [stockDatas, setStockDatas] = useState([]);
   const [chartDatas, setChartDatas] = useState([]);
+  const [End, setEnd] = useState(false);
+  const [Info, setInfo] = useState(true);
 
   const [money, setMoney] = useState(10000);
   const [share, setShare] = useState();
 
+  
+  const restart = () => {
+    setEnd(false);
+    setGraph(false);
+    setInfo(true);
+  };
   const saveData = (ticker, start_date, share) => {
     fetch("/api/history", {
       method: "POST",
@@ -22,14 +30,14 @@ const Homescreen = (props) => {
       }),
       headers: { "Content-Type": "application/json" },
     })
-    .then((response) => response.json())
-    .then((message) => {
-      for(var i = 0; i < message.length; i++){
-        if (message[i].Date == start_date) {
-          message.splice(0, i);
-          break;
+      .then((response) => response.json())
+      .then((message) => {
+        for (var i = 0; i < message.length; i++) {
+          if (message[i].Date == start_date) {
+            message.splice(0, i);
+            break;
+          }
         }
-      }
       setStock(ticker);
       setStart_Date(start_date);
       setShare(share);
@@ -68,7 +76,17 @@ const Homescreen = (props) => {
 
   return !Graph ? (
     <div>
-      <InfoScreen saveDataCallBack={saveData}/>
+      {Info && <InfoScreen saveDataCallBack={saveData} />}
+      {Graph && (
+        <GraphScreen
+          stock={Stock}
+          start_date={Start_Date}
+          stockDatas={stockDatas}
+          chartDatas={chartDatas}
+          skip={skip}
+        />
+      )}
+      {End && <EndScreen restart={restart} />}
     </div>
   ) : (
     <GraphScreen
