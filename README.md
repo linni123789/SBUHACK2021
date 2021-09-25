@@ -4,10 +4,9 @@
 
 - Have Python
 - Have Nodejs
+- Have 2 terminals open!
 
 # You have to open up both the backend and the front end for the project to work as intended.#
-
-## Have 2 terminals open!
 
 ## Terminal 1
 
